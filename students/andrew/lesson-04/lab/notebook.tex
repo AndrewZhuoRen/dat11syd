@@ -1,0 +1,992 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Regression Test}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{statsmodels}\PY{n+nn}{.}\PY{n+nn}{formula}\PY{n+nn}{.}\PY{n+nn}{api} \PY{k}{as} \PY{n+nn}{smf}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{math}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{C:/Users/Andrew/Downloads/jena\PYZus{}climate\PYZus{}2009\PYZus{}2016.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{k}{del} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Date Time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{} This data contains time series weather attributes recorded by a weather station in Jena, Germany. }
+        
+        \PY{c+c1}{\PYZsh{} The goal of this exercise is to create a multi linear regression model that predicts/infers temperature based upon the other weather attributes. }
+        
+        \PY{c+c1}{\PYZsh{}I am eliminating the date column and assuming seasonality has minimal effect compared to the other x variables. This action is partially justified due to the fact that the R\PYZhy{}squared \PYZam{} Adjusted R\PYZhy{}Squared are already relatively high (0.998) with no seasonality factored in. }
+        
+        \PY{c+c1}{\PYZsh{}Below is some copy pasted code that outputs a list of correlation values between all columns in the data, sorted from highest correlation to lowest.}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Data Frame}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Correlation Matrix}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+        
+        \PY{k}{def} \PY{n+nf}{get\PYZus{}redundant\PYZus{}pairs}\PY{p}{(}\PY{n}{df}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}Get diagonal and lower triangular pairs of correlation matrix\PYZsq{}\PYZsq{}\PYZsq{}}
+            \PY{n}{pairs\PYZus{}to\PYZus{}drop} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{)}
+            \PY{n}{cols} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{columns}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{pairs\PYZus{}to\PYZus{}drop}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{p}{(}\PY{n}{cols}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{cols}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+            \PY{k}{return} \PY{n}{pairs\PYZus{}to\PYZus{}drop}
+        
+        \PY{k}{def} \PY{n+nf}{get\PYZus{}top\PYZus{}abs\PYZus{}correlations}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{n}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+            \PY{n}{au\PYZus{}corr} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{unstack}\PY{p}{(}\PY{p}{)}
+            \PY{n}{labels\PYZus{}to\PYZus{}drop} \PY{o}{=} \PY{n}{get\PYZus{}redundant\PYZus{}pairs}\PY{p}{(}\PY{n}{df}\PY{p}{)}
+            \PY{n}{au\PYZus{}corr} \PY{o}{=} \PY{n}{au\PYZus{}corr}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{labels}\PY{o}{=}\PY{n}{labels\PYZus{}to\PYZus{}drop}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+            \PY{k}{return} \PY{n}{au\PYZus{}corr}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{n}{n}\PY{p}{]}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Top Absolute Correlations}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{get\PYZus{}top\PYZus{}abs\PYZus{}correlations}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Data Frame
+          Pmbar  TdegC   TpotK  TdewdegC     RH  VPMAXmbar  VPACTmbar  \textbackslash{}
+0        996.52  -8.02  265.40     -8.90  93.30       3.33       3.11   
+1        996.57  -8.41  265.01     -9.28  93.40       3.23       3.02   
+2        996.53  -8.51  264.91     -9.31  93.90       3.21       3.01   
+3        996.51  -8.31  265.12     -9.07  94.20       3.26       3.07   
+4        996.51  -8.27  265.15     -9.04  94.10       3.27       3.08   
+5        996.50  -8.05  265.38     -8.78  94.40       3.33       3.14   
+6        996.50  -7.62  265.81     -8.30  94.80       3.44       3.26   
+7        996.50  -7.62  265.81     -8.36  94.40       3.44       3.25   
+8        996.50  -7.91  265.52     -8.73  93.80       3.36       3.15   
+9        996.53  -8.43  264.99     -9.34  93.10       3.23       3.00   
+10       996.62  -8.76  264.66     -9.66  93.10       3.14       2.93   
+11       996.62  -8.88  264.54     -9.77  93.20       3.12       2.90   
+12       996.63  -8.85  264.57     -9.70  93.50       3.12       2.92   
+13       996.74  -8.83  264.58     -9.68  93.50       3.13       2.92   
+14       996.81  -8.66  264.74     -9.46  93.90       3.17       2.98   
+15       996.81  -8.66  264.74     -9.50  93.60       3.17       2.97   
+16       996.86  -8.70  264.70     -9.55  93.50       3.16       2.95   
+17       996.84  -8.81  264.59     -9.66  93.50       3.13       2.93   
+18       996.87  -8.84  264.56     -9.69  93.50       3.13       2.92   
+19       996.97  -8.94  264.45     -9.82  93.30       3.10       2.89   
+20       997.08  -8.94  264.44     -9.80  93.40       3.10       2.90   
+21       997.10  -8.86  264.52     -9.76  93.10       3.12       2.90   
+22       997.06  -8.99  264.39     -9.99  92.40       3.09       2.85   
+23       996.99  -9.05  264.34    -10.02  92.60       3.07       2.85   
+24       997.05  -9.23  264.15    -10.25  92.20       3.03       2.79   
+25       997.11  -9.49  263.89    -10.54  92.00       2.97       2.73   
+26       997.19  -9.50  263.87    -10.51  92.30       2.97       2.74   
+27       997.24  -9.35  264.02    -10.29  92.80       3.00       2.79   
+28       997.37  -9.47  263.89    -10.46  92.40       2.97       2.75   
+29       997.46  -9.63  263.72    -10.65  92.20       2.94       2.71   
+{\ldots}         {\ldots}    {\ldots}     {\ldots}       {\ldots}    {\ldots}        {\ldots}        {\ldots}   
+420521  1002.18  -0.98  272.01     -5.36  72.00       5.69       4.09   
+420522  1002.08  -1.40  271.59     -6.10  70.20       5.51       3.87   
+420523  1001.98  -1.47  271.54     -6.12  70.40       5.48       3.86   
+420524  1001.78  -1.61  271.41     -6.23  70.60       5.43       3.83   
+420525  1001.55  -1.65  271.39     -6.55  69.05       5.41       3.74   
+420526  1001.47  -1.52  271.52     -7.13  65.42       5.46       3.57   
+420527  1001.40  -1.40  271.66     -6.84  66.29       5.51       3.65   
+420528  1001.42  -2.15  270.90     -7.08  68.77       5.21       3.59   
+420529  1001.45  -3.19  269.86     -7.15  73.90       4.83       3.57   
+420530  1001.39  -3.30  269.75     -6.82  76.50       4.78       3.66   
+420531  1001.33  -3.46  269.59     -7.13  75.60       4.73       3.57   
+420532  1001.29  -3.09  269.98     -7.09  73.70       4.86       3.58   
+420533  1001.19  -2.75  270.32     -6.90  72.90       4.99       3.64   
+420534  1001.05  -2.61  270.47     -6.97  71.80       5.04       3.62   
+420535  1001.04  -2.51  270.57     -6.94  71.40       5.08       3.62   
+420536  1001.00  -2.48  270.60     -6.97  71.10       5.09       3.62   
+420537  1000.81  -2.48  270.62     -6.95  71.20       5.09       3.62   
+420538  1000.70  -2.59  270.51     -7.04  71.30       5.04       3.60   
+420539  1000.65  -2.89  270.22     -7.15  72.30       4.93       3.57   
+420540  1000.51  -3.22  269.90     -7.63  71.40       4.81       3.44   
+420541  1000.44  -4.08  269.05     -7.89  74.60       4.51       3.37   
+420542  1000.45  -4.45  268.68     -7.15  81.30       4.39       3.57   
+420543  1000.32  -4.09  269.05     -7.23  78.60       4.51       3.54   
+420544  1000.21  -3.76  269.39     -7.95  72.50       4.62       3.35   
+420545  1000.11  -3.93  269.23     -8.09  72.60       4.56       3.31   
+420546  1000.07  -4.05  269.10     -8.13  73.10       4.52       3.30   
+420547   999.93  -3.35  269.81     -8.06  69.71       4.77       3.32   
+420548   999.82  -3.16  270.01     -8.21  67.91       4.84       3.28   
+420549   999.81  -4.23  268.94     -8.53  71.80       4.46       3.20   
+420550   999.82  -4.82  268.36     -8.42  75.70       4.27       3.23   
+
+        VPDEFmbar  SHgPERkg  H2OCmmolPERmol  RHOgPERm3  WVmPERs  MAXWVmPERs  \textbackslash{}
+0            0.22      1.94            3.12    1307.75     1.03        1.75   
+1            0.21      1.89            3.03    1309.80     0.72        1.50   
+2            0.20      1.88            3.02    1310.24     0.19        0.63   
+3            0.19      1.92            3.08    1309.19     0.34        0.50   
+4            0.19      1.92            3.09    1309.00     0.32        0.63   
+5            0.19      1.96            3.15    1307.86     0.21        0.63   
+6            0.18      2.04            3.27    1305.68     0.18        0.63   
+7            0.19      2.03            3.26    1305.69     0.19        0.50   
+8            0.21      1.97            3.16    1307.17     0.28        0.75   
+9            0.22      1.88            3.02    1309.85     0.59        0.88   
+10           0.22      1.83            2.94    1311.64     0.45        0.88   
+11           0.21      1.81            2.91    1312.25     0.25        0.63   
+12           0.20      1.82            2.93    1312.11     0.16        0.50   
+13           0.20      1.83            2.93    1312.15     0.36        0.63   
+14           0.19      1.86            2.99    1311.37     0.33        0.75   
+15           0.20      1.85            2.98    1311.38     0.07        0.50   
+16           0.21      1.85            2.96    1311.64     0.32        0.63   
+17           0.20      1.83            2.94    1312.18     0.18        0.63   
+18           0.20      1.83            2.93    1312.37     0.07        0.25   
+19           0.21      1.81            2.90    1313.01     0.10        0.63   
+20           0.20      1.81            2.90    1313.15     0.30        0.75   
+21           0.22      1.81            2.91    1312.78     0.29        0.75   
+22           0.23      1.78            2.86    1313.39     0.12        0.63   
+23           0.23      1.78            2.85    1313.61     0.10        0.38   
+24           0.24      1.74            2.80    1314.62     0.10        0.38   
+25           0.24      1.71            2.74    1316.02     0.34        0.75   
+26           0.23      1.71            2.75    1316.16     0.43        0.88   
+27           0.22      1.74            2.79    1315.47     0.40        0.88   
+28           0.23      1.72            2.75    1316.25     0.37        0.75   
+29           0.23      1.69            2.71    1317.19     0.40        0.88   
+{\ldots}           {\ldots}       {\ldots}             {\ldots}        {\ldots}      {\ldots}         {\ldots}   
+420521       1.59      2.54            4.08    1280.70     0.87        1.36   
+420522       1.64      2.40            3.86    1282.68     1.08        1.68   
+420523       1.62      2.40            3.85    1282.85     0.64        1.32   
+420524       1.60      2.38            3.82    1283.30     0.20        0.48   
+420525       1.67      2.32            3.73    1283.24     0.73        1.20   
+420526       1.89      2.22            3.57    1282.60     1.24        1.96   
+420527       1.86      2.27            3.65    1281.87     1.02        1.92   
+420528       1.63      2.23            3.58    1285.50     0.79        1.24   
+420529       1.26      2.22            3.56    1290.48     1.19        1.84   
+420530       1.12      2.28            3.65    1290.91     0.49        1.04   
+420531       1.15      2.22            3.57    1291.65     0.81        1.16   
+420532       1.28      2.23            3.58    1289.78     0.61        1.48   
+420533       1.35      2.26            3.63    1288.02     0.71        1.56   
+420534       1.42      2.25            3.61    1287.20     0.77        1.64   
+420535       1.45      2.25            3.62    1286.70     0.49        1.28   
+420536       1.47      2.25            3.61    1286.50     0.62        1.02   
+420537       1.47      2.25            3.62    1286.24     0.24        0.52   
+420538       1.45      2.24            3.59    1286.67     0.38        0.72   
+420539       1.37      2.22            3.57    1288.03     0.35        0.68   
+420540       1.38      2.14            3.44    1289.50     0.85        1.54   
+420541       1.15      2.10            3.37    1293.55     1.27        2.48   
+420542       0.82      2.22            3.57    1295.24     0.80        1.44   
+420543       0.96      2.21            3.54    1293.37     1.25        1.60   
+420544       1.27      2.09            3.35    1291.71     0.89        1.30   
+420545       1.25      2.06            3.31    1292.41     0.56        1.00   
+420546       1.22      2.06            3.30    1292.98     0.67        1.52   
+420547       1.44      2.07            3.32    1289.44     1.14        1.92   
+420548       1.55      2.05            3.28    1288.39     1.08        2.00   
+420549       1.26      1.99            3.20    1293.56     1.49        2.16   
+420550       1.04      2.01            3.23    1296.38     1.23        1.96   
+
+         WDdeg  
+0       152.30  
+1       136.10  
+2       171.60  
+3       198.00  
+4       214.30  
+5       192.70  
+6       166.50  
+7       118.60  
+8       188.50  
+9       185.00  
+10      183.20  
+11      190.30  
+12      158.30  
+13      184.80  
+14      155.90  
+15      272.40  
+16      219.20  
+17      167.20  
+18      129.30  
+19      115.30  
+20      149.30  
+21      149.70  
+22      231.70  
+23      240.00  
+24      203.90  
+25      159.70  
+26       66.16  
+27      105.00  
+28      125.80  
+29      157.00  
+{\ldots}        {\ldots}  
+420521  190.60  
+420522  207.50  
+420523  235.10  
+420524  298.30  
+420525  212.00  
+420526  232.00  
+420527  225.40  
+420528  184.30  
+420529  190.00  
+420530  188.10  
+420531  201.40  
+420532  207.50  
+420533  158.70  
+420534  129.10  
+420535   54.88  
+420536   30.62  
+420537    9.40  
+420538    8.15  
+420539  216.70  
+420540  207.80  
+420541  192.10  
+420542  183.80  
+420543  199.20  
+420544  223.70  
+420545  202.60  
+420546  240.00  
+420547  234.30  
+420548  215.20  
+420549  225.80  
+420550  184.90  
+
+[420551 rows x 14 columns]
+
+Correlation Matrix
+                   Pmbar     TdegC     TpotK  TdewdegC        RH  VPMAXmbar  \textbackslash{}
+Pmbar           1.000000 -0.045375 -0.124718 -0.066755 -0.018352  -0.031546   
+TdegC          -0.045375  1.000000  0.996827  0.895708 -0.572416   0.951113   
+TpotK          -0.124718  0.996827  1.000000  0.894911 -0.567127   0.947293   
+TdewdegC       -0.066755  0.895708  0.894911  1.000000 -0.156615   0.799271   
+RH             -0.018352 -0.572416 -0.567127 -0.156615  1.000000  -0.615842   
+VPMAXmbar      -0.031546  0.951113  0.947293  0.799271 -0.615842   1.000000   
+VPACTmbar      -0.054370  0.867673  0.866205  0.968344 -0.151494   0.824865   
+VPDEFmbar      -0.003401  0.761744  0.756962  0.435752 -0.843835   0.875588   
+SHgPERkg       -0.069762  0.866755  0.866533  0.967599 -0.150841   0.824460   
+H2OCmmolPERmol -0.069804  0.867177  0.866955  0.968044 -0.150969   0.824493   
+RHOgPERm3       0.307640 -0.963410 -0.981345 -0.885232  0.514282  -0.901536   
+WVmPERs        -0.005701 -0.004689 -0.004195 -0.008718 -0.005020  -0.004018   
+MAXWVmPERs     -0.007760 -0.002871 -0.002224 -0.009091 -0.009921  -0.002213   
+WDdeg          -0.063258  0.038732  0.043599  0.049877 -0.015912  -0.009583   
+
+                VPACTmbar  VPDEFmbar  SHgPERkg  H2OCmmolPERmol  RHOgPERm3  \textbackslash{}
+Pmbar           -0.054370  -0.003401 -0.069762       -0.069804   0.307640   
+TdegC            0.867673   0.761744  0.866755        0.867177  -0.963410   
+TpotK            0.866205   0.756962  0.866533        0.866955  -0.981345   
+TdewdegC         0.968344   0.435752  0.967599        0.968044  -0.885232   
+RH              -0.151494  -0.843835 -0.150841       -0.150969   0.514282   
+VPMAXmbar        0.824865   0.875588  0.824460        0.824493  -0.901536   
+VPACTmbar        1.000000   0.449154  0.999851        0.999856  -0.850241   
+VPDEFmbar        0.449154   1.000000  0.448641        0.448689  -0.698290   
+SHgPERkg         0.999851   0.448641  1.000000        0.999997  -0.853325   
+H2OCmmolPERmol   0.999856   0.448689  0.999997        1.000000  -0.853769   
+RHOgPERm3       -0.850241  -0.698290 -0.853325       -0.853769   1.000000   
+WVmPERs         -0.009600   0.001852 -0.009479       -0.009477   0.003240   
+MAXWVmPERs      -0.010316   0.005317 -0.010163       -0.010158   0.001086   
+WDdeg            0.018418  -0.030881  0.019376        0.019607  -0.058072   
+
+                 WVmPERs  MAXWVmPERs     WDdeg  
+Pmbar          -0.005701   -0.007760 -0.063258  
+TdegC          -0.004689   -0.002871  0.038732  
+TpotK          -0.004195   -0.002224  0.043599  
+TdewdegC       -0.008718   -0.009091  0.049877  
+RH             -0.005020   -0.009921 -0.015912  
+VPMAXmbar      -0.004018   -0.002213 -0.009583  
+VPACTmbar      -0.009600   -0.010316  0.018418  
+VPDEFmbar       0.001852    0.005317 -0.030881  
+SHgPERkg       -0.009479   -0.010163  0.019376  
+H2OCmmolPERmol -0.009477   -0.010158  0.019607  
+RHOgPERm3       0.003240    0.001086 -0.058072  
+WVmPERs         1.000000    0.948477 -0.015322  
+MAXWVmPERs      0.948477    1.000000 -0.014471  
+WDdeg          -0.015322   -0.014471  1.000000  
+
+Top Absolute Correlations
+SHgPERkg        H2OCmmolPERmol    0.999997
+VPACTmbar       H2OCmmolPERmol    0.999856
+                SHgPERkg          0.999851
+TdegC           TpotK             0.996827
+TpotK           RHOgPERm3         0.981345
+TdewdegC        VPACTmbar         0.968344
+                H2OCmmolPERmol    0.968044
+                SHgPERkg          0.967599
+TdegC           RHOgPERm3         0.963410
+                VPMAXmbar         0.951113
+WVmPERs         MAXWVmPERs        0.948477
+TpotK           VPMAXmbar         0.947293
+VPMAXmbar       RHOgPERm3         0.901536
+TdegC           TdewdegC          0.895708
+TpotK           TdewdegC          0.894911
+TdewdegC        RHOgPERm3         0.885232
+VPMAXmbar       VPDEFmbar         0.875588
+TdegC           VPACTmbar         0.867673
+                H2OCmmolPERmol    0.867177
+TpotK           H2OCmmolPERmol    0.866955
+TdegC           SHgPERkg          0.866755
+TpotK           SHgPERkg          0.866533
+                VPACTmbar         0.866205
+H2OCmmolPERmol  RHOgPERm3         0.853769
+SHgPERkg        RHOgPERm3         0.853325
+VPACTmbar       RHOgPERm3         0.850241
+RH              VPDEFmbar         0.843835
+VPMAXmbar       VPACTmbar         0.824865
+                H2OCmmolPERmol    0.824493
+                SHgPERkg          0.824460
+                                    {\ldots}   
+SHgPERkg        WDdeg             0.019376
+VPACTmbar       WDdeg             0.018418
+Pmbar           RH                0.018352
+RH              WDdeg             0.015912
+WVmPERs         WDdeg             0.015322
+MAXWVmPERs      WDdeg             0.014471
+VPACTmbar       MAXWVmPERs        0.010316
+SHgPERkg        MAXWVmPERs        0.010163
+H2OCmmolPERmol  MAXWVmPERs        0.010158
+RH              MAXWVmPERs        0.009921
+VPACTmbar       WVmPERs           0.009600
+VPMAXmbar       WDdeg             0.009583
+SHgPERkg        WVmPERs           0.009479
+H2OCmmolPERmol  WVmPERs           0.009477
+TdewdegC        MAXWVmPERs        0.009091
+                WVmPERs           0.008718
+Pmbar           MAXWVmPERs        0.007760
+                WVmPERs           0.005701
+VPDEFmbar       MAXWVmPERs        0.005317
+RH              WVmPERs           0.005020
+TdegC           WVmPERs           0.004689
+TpotK           WVmPERs           0.004195
+VPMAXmbar       WVmPERs           0.004018
+Pmbar           VPDEFmbar         0.003401
+RHOgPERm3       WVmPERs           0.003240
+TdegC           MAXWVmPERs        0.002871
+TpotK           MAXWVmPERs        0.002224
+VPMAXmbar       MAXWVmPERs        0.002213
+VPDEFmbar       WVmPERs           0.001852
+RHOgPERm3       MAXWVmPERs        0.001086
+Length: 91, dtype: float64
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:}     Pmbar  TdegC   TpotK  TdewdegC    RH  VPMAXmbar  VPACTmbar  VPDEFmbar  \textbackslash{}
+        0  996.52  -8.02  265.40     -8.90  93.3       3.33       3.11       0.22   
+        1  996.57  -8.41  265.01     -9.28  93.4       3.23       3.02       0.21   
+        2  996.53  -8.51  264.91     -9.31  93.9       3.21       3.01       0.20   
+        3  996.51  -8.31  265.12     -9.07  94.2       3.26       3.07       0.19   
+        4  996.51  -8.27  265.15     -9.04  94.1       3.27       3.08       0.19   
+        
+           SHgPERkg  H2OCmmolPERmol  RHOgPERm3  WVmPERs  MAXWVmPERs  WDdeg  
+        0      1.94            3.12    1307.75     1.03        1.75  152.3  
+        1      1.89            3.03    1309.80     0.72        1.50  136.1  
+        2      1.88            3.02    1310.24     0.19        0.63  171.6  
+        3      1.92            3.08    1309.19     0.34        0.50  198.0  
+        4      1.92            3.09    1309.00     0.32        0.63  214.3  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{df}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}7}]:}                Pmbar          TdegC          TpotK       TdewdegC  \textbackslash{}
+        count  420551.000000  420551.000000  420551.000000  420551.000000   
+        mean      989.212776       9.450147     283.492743       4.955854   
+        std         8.358481       8.423365       8.504471       6.730674   
+        min       913.600000     -23.010000     250.600000     -25.010000   
+        25\%       984.200000       3.360000     277.430000       0.240000   
+        50\%       989.580000       9.420000     283.470000       5.220000   
+        75\%       994.720000      15.470000     289.530000      10.070000   
+        max      1015.350000      37.280000     311.340000      23.110000   
+        
+                          RH      VPMAXmbar      VPACTmbar      VPDEFmbar  \textbackslash{}
+        count  420551.000000  420551.000000  420551.000000  420551.000000   
+        mean       76.008259      13.576251       9.533756       4.042412   
+        std        16.476175       7.739020       4.184164       4.896851   
+        min        12.950000       0.950000       0.790000       0.000000   
+        25\%        65.210000       7.780000       6.210000       0.870000   
+        50\%        79.300000      11.820000       8.860000       2.190000   
+        75\%        89.400000      17.600000      12.350000       5.300000   
+        max       100.000000      63.770000      28.320000      46.010000   
+        
+                    SHgPERkg  H2OCmmolPERmol      RHOgPERm3        WVmPERs  \textbackslash{}
+        count  420551.000000   420551.000000  420551.000000  420551.000000   
+        mean        6.022408        9.640223    1216.062748       1.702224   
+        std         2.656139        4.235395      39.975208      65.446714   
+        min         0.500000        0.800000    1059.450000   -9999.000000   
+        25\%         3.920000        6.290000    1187.490000       0.990000   
+        50\%         5.590000        8.960000    1213.790000       1.760000   
+        75\%         7.800000       12.490000    1242.770000       2.860000   
+        max        18.130000       28.820000    1393.540000      28.490000   
+        
+                  MAXWVmPERs          WDdeg  
+        count  420551.000000  420551.000000  
+        mean        3.056555     174.743738  
+        std        69.016932      86.681693  
+        min     -9999.000000       0.000000  
+        25\%         1.760000     124.900000  
+        50\%         2.960000     198.100000  
+        75\%         4.740000     234.100000  
+        max        23.500000     360.000000  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{df}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdegC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:}                    Pmbar     TdegC     TpotK  TdewdegC        RH  VPMAXmbar  \textbackslash{}
+        TdegC          -0.045375  1.000000  0.996827  0.895708 -0.572416   0.951113   
+        TpotK          -0.124718  0.996827  1.000000  0.894911 -0.567127   0.947293   
+        VPMAXmbar      -0.031546  0.951113  0.947293  0.799271 -0.615842   1.000000   
+        TdewdegC       -0.066755  0.895708  0.894911  1.000000 -0.156615   0.799271   
+        VPACTmbar      -0.054370  0.867673  0.866205  0.968344 -0.151494   0.824865   
+        H2OCmmolPERmol -0.069804  0.867177  0.866955  0.968044 -0.150969   0.824493   
+        SHgPERkg       -0.069762  0.866755  0.866533  0.967599 -0.150841   0.824460   
+        VPDEFmbar      -0.003401  0.761744  0.756962  0.435752 -0.843835   0.875588   
+        WDdeg          -0.063258  0.038732  0.043599  0.049877 -0.015912  -0.009583   
+        MAXWVmPERs     -0.007760 -0.002871 -0.002224 -0.009091 -0.009921  -0.002213   
+        WVmPERs        -0.005701 -0.004689 -0.004195 -0.008718 -0.005020  -0.004018   
+        Pmbar           1.000000 -0.045375 -0.124718 -0.066755 -0.018352  -0.031546   
+        RH             -0.018352 -0.572416 -0.567127 -0.156615  1.000000  -0.615842   
+        RHOgPERm3       0.307640 -0.963410 -0.981345 -0.885232  0.514282  -0.901536   
+        
+                        VPACTmbar  VPDEFmbar  SHgPERkg  H2OCmmolPERmol  RHOgPERm3  \textbackslash{}
+        TdegC            0.867673   0.761744  0.866755        0.867177  -0.963410   
+        TpotK            0.866205   0.756962  0.866533        0.866955  -0.981345   
+        VPMAXmbar        0.824865   0.875588  0.824460        0.824493  -0.901536   
+        TdewdegC         0.968344   0.435752  0.967599        0.968044  -0.885232   
+        VPACTmbar        1.000000   0.449154  0.999851        0.999856  -0.850241   
+        H2OCmmolPERmol   0.999856   0.448689  0.999997        1.000000  -0.853769   
+        SHgPERkg         0.999851   0.448641  1.000000        0.999997  -0.853325   
+        VPDEFmbar        0.449154   1.000000  0.448641        0.448689  -0.698290   
+        WDdeg            0.018418  -0.030881  0.019376        0.019607  -0.058072   
+        MAXWVmPERs      -0.010316   0.005317 -0.010163       -0.010158   0.001086   
+        WVmPERs         -0.009600   0.001852 -0.009479       -0.009477   0.003240   
+        Pmbar           -0.054370  -0.003401 -0.069762       -0.069804   0.307640   
+        RH              -0.151494  -0.843835 -0.150841       -0.150969   0.514282   
+        RHOgPERm3       -0.850241  -0.698290 -0.853325       -0.853769   1.000000   
+        
+                         WVmPERs  MAXWVmPERs     WDdeg  
+        TdegC          -0.004689   -0.002871  0.038732  
+        TpotK          -0.004195   -0.002224  0.043599  
+        VPMAXmbar      -0.004018   -0.002213 -0.009583  
+        TdewdegC       -0.008718   -0.009091  0.049877  
+        VPACTmbar      -0.009600   -0.010316  0.018418  
+        H2OCmmolPERmol -0.009477   -0.010158  0.019607  
+        SHgPERkg       -0.009479   -0.010163  0.019376  
+        VPDEFmbar       0.001852    0.005317 -0.030881  
+        WDdeg          -0.015322   -0.014471  1.000000  
+        MAXWVmPERs      0.948477    1.000000 -0.014471  
+        WVmPERs         1.000000    0.948477 -0.015322  
+        Pmbar          -0.005701   -0.007760 -0.063258  
+        RH             -0.005020   -0.009921 -0.015912  
+        RHOgPERm3       0.003240    0.001086 -0.058072  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{} Multi linear regression performed. TpotK removed as it almost perfectly correlates with TdegC, hence I am assuming it is simply the Kelvin measure of the temperature. The lack of a perfect 1 correlation may be due to measuring errors only. }
+         
+         \PY{n}{lm} \PY{o}{=} \PY{n}{smf}\PY{o}{.}\PY{n}{ols}\PY{p}{(}\PY{n}{formula}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdegC \PYZti{} TdewdegC + RH + VPMAXmbar + VPACTmbar + VPDEFmbar + SHgPERkg + H2OCmmolPERmol + RHOgPERm3 + WVmPERs + MAXWVmPERs + WDdeg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{df}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{p}{)}
+         \PY{n}{lm}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}15}]:} <class 'statsmodels.iolib.summary.Summary'>
+         """
+                                     OLS Regression Results                            
+         ==============================================================================
+         Dep. Variable:                  TdegC   R-squared:                       0.998
+         Model:                            OLS   Adj. R-squared:                  0.998
+         Method:                 Least Squares   F-statistic:                 2.306e+07
+         Date:                Sun, 04 Mar 2018   Prob (F-statistic):               0.00
+         Time:                        22:18:16   Log-Likelihood:            -1.6641e+05
+         No. Observations:              420551   AIC:                         3.328e+05
+         Df Residuals:                  420540   BIC:                         3.330e+05
+         Df Model:                          10                                         
+         Covariance Type:            nonrobust                                         
+         ==================================================================================
+                              coef    std err          t      P>|t|      [0.025      0.975]
+         ----------------------------------------------------------------------------------
+         Intercept         47.9184      0.138    347.740      0.000      47.648      48.188
+         TdewdegC           0.8892      0.001   1019.936      0.000       0.887       0.891
+         RH                -0.1442      0.000  -1244.298      0.000      -0.144      -0.144
+         VPACTmbar          3.5396      0.018    199.730      0.000       3.505       3.574
+         VPDEFmbar          0.2412      0.000    855.809      0.000       0.241       0.242
+         SHgPERkg          -2.0041      0.138    -14.492      0.000      -2.275      -1.733
+         H2OCmmolPERmol    -2.3066      0.088    -26.280      0.000      -2.479      -2.135
+         RHOgPERm3         -0.0266      0.000   -225.551      0.000      -0.027      -0.026
+         WVmPERs         2.946e-05   2.67e-05      1.102      0.270   -2.29e-05    8.19e-05
+         MAXWVmPERs     -1.519e-05   2.54e-05     -0.599      0.549   -6.49e-05    3.45e-05
+         WDdeg             -0.0002   6.52e-06    -23.616      0.000      -0.000      -0.000
+         ==============================================================================
+         Omnibus:                   288775.868   Durbin-Watson:                   0.016
+         Prob(Omnibus):                  0.000   Jarque-Bera (JB):         11776776.335
+         Skew:                           2.799   Prob(JB):                         0.00
+         Kurtosis:                      28.313   Cond. No.                     3.63e+05
+         ==============================================================================
+         
+         Warnings:
+         [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+         [2] The condition number is large, 3.63e+05. This might indicate that there are
+         strong multicollinearity or other numerical problems.
+         """
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{\PYZsh{}WVmPERs and MAXWVmPERS removed due to lack of statistical significance as can be seen in the above summary. The regression was then rerun. As expected, there was no change in the R\PYZca{}2 or Adjusted R\PYZca{}2 values. All other variables seem highly significant.}
+         
+         \PY{n}{lm} \PY{o}{=} \PY{n}{smf}\PY{o}{.}\PY{n}{ols}\PY{p}{(}\PY{n}{formula}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdegC \PYZti{} TdewdegC + RH + VPMAXmbar + VPACTmbar + VPDEFmbar + SHgPERkg + H2OCmmolPERmol + RHOgPERm3 + WDdeg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{df}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{p}{)}
+         \PY{n}{lm}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} <class 'statsmodels.iolib.summary.Summary'>
+         """
+                                     OLS Regression Results                            
+         ==============================================================================
+         Dep. Variable:                  TdegC   R-squared:                       0.998
+         Model:                            OLS   Adj. R-squared:                  0.998
+         Method:                 Least Squares   F-statistic:                 2.562e+07
+         Date:                Sun, 04 Mar 2018   Prob (F-statistic):               0.00
+         Time:                        22:15:00   Log-Likelihood:            -1.6634e+05
+         No. Observations:              420551   AIC:                         3.327e+05
+         Df Residuals:                  420541   BIC:                         3.328e+05
+         Df Model:                           9                                         
+         Covariance Type:            nonrobust                                         
+         ==================================================================================
+                              coef    std err          t      P>|t|      [0.025      0.975]
+         ----------------------------------------------------------------------------------
+         Intercept         47.9932      0.138    347.950      0.000      47.723      48.264
+         TdewdegC           0.8888      0.001   1018.741      0.000       0.887       0.890
+         RH                -0.1441      0.000  -1242.978      0.000      -0.144      -0.144
+         VPMAXmbar          1.2741      0.111     11.518      0.000       1.057       1.491
+         VPACTmbar          2.2760      0.111     20.481      0.000       2.058       2.494
+         VPDEFmbar         -1.0329      0.111     -9.337      0.000      -1.250      -0.816
+         SHgPERkg          -2.0041      0.138    -14.494      0.000      -2.275      -1.733
+         H2OCmmolPERmol    -2.3167      0.088    -26.398      0.000      -2.489      -2.145
+         RHOgPERm3         -0.0266      0.000   -225.877      0.000      -0.027      -0.026
+         WDdeg             -0.0002   6.51e-06    -23.552      0.000      -0.000      -0.000
+         ==============================================================================
+         Omnibus:                   288634.276   Durbin-Watson:                   0.015
+         Prob(Omnibus):                  0.000   Jarque-Bera (JB):         11759814.803
+         Skew:                           2.798   Prob(JB):                         0.00
+         Kurtosis:                      28.294   Cond. No.                     4.25e+05
+         ==============================================================================
+         
+         Warnings:
+         [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+         [2] The condition number is large, 4.25e+05. This might indicate that there are
+         strong multicollinearity or other numerical problems.
+         """
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{c+c1}{\PYZsh{} Now removing variables until Adjusted R\PYZhy{}squared begins to go down, in order to streamline the regression. Selected variables were removed through trial and error.}
+         
+         \PY{c+c1}{\PYZsh{} VPMAXmbar, VPACTmbar, SHgPERkg, H2OCmmolPERmol, RHOgPERm3 and WDdeg were removed.}
+         
+         \PY{n}{lm} \PY{o}{=} \PY{n}{smf}\PY{o}{.}\PY{n}{ols}\PY{p}{(}\PY{n}{formula}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdegC \PYZti{} TdewdegC + RH + VPDEFmbar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{df}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{p}{)}
+         \PY{n}{lm}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} The following variables were determined to have the largest predictive impact on temperature (my interpretation of the meaning of the variables may be innacurate as no data dictionary was provided):}
+         \PY{c+c1}{\PYZsh{} 1. Temperature of Dew (Tdewdeg) (Or some form of precipitation measurement I assume)}
+         \PY{c+c1}{\PYZsh{} 2. Relative Humidity (RH)}
+         \PY{c+c1}{\PYZsh{} 3. Saturation Vapor Pressure Deficity (VPDEF) }
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}33}]:} <class 'statsmodels.iolib.summary.Summary'>
+         """
+                                     OLS Regression Results                            
+         ==============================================================================
+         Dep. Variable:                  TdegC   R-squared:                       0.998
+         Model:                            OLS   Adj. R-squared:                  0.998
+         Method:                 Least Squares   F-statistic:                 6.184e+07
+         Date:                Sun, 04 Mar 2018   Prob (F-statistic):               0.00
+         Time:                        22:34:16   Log-Likelihood:            -2.1201e+05
+         No. Observations:              420551   AIC:                         4.240e+05
+         Df Residuals:                  420547   BIC:                         4.241e+05
+         Df Model:                           3                                         
+         Covariance Type:            nonrobust                                         
+         ==============================================================================
+                          coef    std err          t      P>|t|      [0.025      0.975]
+         ------------------------------------------------------------------------------
+         Intercept     16.3682      0.007   2434.540      0.000      16.355      16.381
+         TdewdegC       0.9781      0.000   8627.240      0.000       0.978       0.978
+         RH            -0.1680   7.77e-05  -2162.150      0.000      -0.168      -0.168
+         VPDEFmbar      0.2477      0.000    863.477      0.000       0.247       0.248
+         ==============================================================================
+         Omnibus:                   274048.665   Durbin-Watson:                   0.013
+         Prob(Omnibus):                  0.000   Jarque-Bera (JB):          9856676.183
+         Skew:                           2.626   Prob(JB):                         0.00
+         Kurtosis:                      26.128   Cond. No.                         849.
+         ==============================================================================
+         
+         Warnings:
+         [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+         """
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{C:/Users/Andrew/Downloads/jena\PYZus{}climate\PYZus{}2009\PYZus{}2016.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{k}{del} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Date Time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{fig}\PY{p}{,}\PY{n}{axs}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{df}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scatter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdewdegC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdegC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{ax}\PY{o}{=}\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}facecolor}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{white}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{df}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scatter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RH}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdegC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{ax}\PY{o}{=}\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}facecolor}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{white}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{df}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scatter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VPDEFmbar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdegC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{ax}\PY{o}{=}\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}facecolor}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{white}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}From the graphs plotted, some observations:}
+         \PY{c+c1}{\PYZsh{}1. TdewdegC shows signs of heteroskedasticity. Therefore, robust standard errors should be used when performing inference.}
+         \PY{c+c1}{\PYZsh{}2. VPDEFmbar appears to have a non\PYZhy{}linear relationship with TdegC, testing a regression with the data transformed may be worthwhile. However, I recieved an overflow error while attempting to exponent all the VPDEFmbar values and thus this is yet to be tested.}
+         \PY{c+c1}{\PYZsh{}For the above point, the functional form of VPDEFmbar was unable to be determined. Exponating and squaring did not provide desirable results.}
+         
+         \PY{c+c1}{\PYZsh{}Upon evaluating coefficients and looking at the below graphs, it was determined that RH negatively correlates with TdegC whereas the other x variables positively correlate.}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{c+c1}{\PYZsh{}Experimenting with squaring}
+         
+         \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{C:/Users/Andrew/Downloads/jena\PYZus{}climate\PYZus{}2009\PYZus{}2016.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{k}{del} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Date Time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VPDEFmbar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{square}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VPDEFmbar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{fig}\PY{p}{,}\PY{n}{axs}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{df}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scatter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdewdegC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdegC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{ax}\PY{o}{=}\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}facecolor}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{white}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{df}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scatter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RH}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdegC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{ax}\PY{o}{=}\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}facecolor}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{white}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{df}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scatter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VPDEFmbar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdegC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{ax}\PY{o}{=}\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}facecolor}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{white}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{c+c1}{\PYZsh{}Experimenting with exponating}
+         
+         \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{C:/Users/Andrew/Downloads/jena\PYZus{}climate\PYZus{}2009\PYZus{}2016.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{k}{del} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Date Time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VPDEFmbar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VPDEFmbar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{fig}\PY{p}{,}\PY{n}{axs}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{df}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scatter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdewdegC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdegC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{ax}\PY{o}{=}\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}facecolor}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{white}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{df}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scatter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RH}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdegC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{ax}\PY{o}{=}\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}facecolor}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{white}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{df}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scatter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VPDEFmbar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TdegC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{ax}\PY{o}{=}\PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}facecolor}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{white}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{c+c1}{\PYZsh{}Performing inference based on dummy data and coefficients determined in the regression (non\PYZhy{}transformed).}
+         
+         \PY{c+c1}{\PYZsh{}The output of the print is the predicted temperature of a day given the following data: }
+         \PY{c+c1}{\PYZsh{}Tdewdeg = 20 degrees}
+         \PY{c+c1}{\PYZsh{}RH = 60 \PYZpc{}}
+         \PY{c+c1}{\PYZsh{}VPDEF = 0.4 mbar}
+         
+         \PY{n}{y} \PY{o}{=} \PY{l+m+mf}{16.382} \PY{o}{+} \PY{l+m+mf}{0.9781} \PY{o}{*} \PY{l+m+mi}{20} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.1680} \PY{o}{*} \PY{l+m+mi}{60} \PY{o}{+} \PY{l+m+mf}{0.2477} \PY{o}{*} \PY{l+m+mf}{0.4}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{The temperature is approximately }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{y}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ degrees Celcius}\PY{l+s+s2}{\PYZdq{}} \PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}The accuracy of the model should be relatively high due to the low R\PYZhy{}squared value. However, to assess its predictive accuracy, new data should be collected and fed into the model.}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The temperature is approximately 26.0 degrees Celcius
+
+    \end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
